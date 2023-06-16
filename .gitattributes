@@ -1,1 +1,3 @@
-*.flutter linguist-detectable=false
+*.cpp
+*.cc
+linguist-detectable=false
