@@ -1,3 +1,1 @@
-*.cpp
-*.cc
-linguist-detectable=false
+windows/* linguist-vendored
