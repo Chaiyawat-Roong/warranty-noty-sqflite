@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:warranty_noty/constants.dart';
 
 import 'Pages/homePage.dart';
 
@@ -28,7 +30,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: cPrimaryPurple, primary: cPrimaryPurple, secondary: cSecondaryLightPurple, background: cBackgroundWhite),
+        textTheme: TextTheme(bodyMedium: GoogleFonts.kanit()),
         useMaterial3: true,
       ),
       routeInformationParser: Modular.routeInformationParser,
