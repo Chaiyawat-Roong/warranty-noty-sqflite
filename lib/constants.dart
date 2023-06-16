@@ -6,7 +6,7 @@ const kPrimaryWhite = Color(0xFFFFFFFF);
 const kSecondaryLightPurple = Color(0xFFD0BCFF);
 const kSecondaryGrey = Color(0xFF999999);
 const kBackgroundWhite = Color(0xFFF9FBFC);
-const kBackgorundLightgrey = Color(0xFFEFF1FF);
+const kBackgroundLightgrey = Color(0xFFEFF1FF);
 const kBlack = Color(0xFF322F35);
 const kDanger = Color(0xFFDC362E);
 

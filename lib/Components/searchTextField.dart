@@ -20,7 +20,6 @@ class _SearchTextFieldState extends State<SearchTextField> {
       if (myfocus.hasFocus) {
         print("Textfield one got focused.");
       } else {
-        ReadContext(context).read<HomePageBloc>().add(HomePageSearchEvent());
         Modular.to.pop();
       }
     });
@@ -34,7 +33,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-              color: kBackgorundLightgrey,
+              color: kBackgroundLightgrey,
               borderRadius: BorderRadius.circular(10.0)),
           child: TextField(
             focusNode: myfocus,
@@ -53,7 +52,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                     color: kPrimaryDarkPurple,
                   ),
                   onPressed: () {
-                    
+
                   },
                 ),
                 suffixIconColor: const Color(0xFF3F3E6D),
@@ -61,7 +60,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                   icon: const Icon(Icons.arrow_back_ios,
                       color: kPrimaryDarkPurple),
                   onPressed: () {
-                    _back();
+                    Modular.to.pop();
                   },
                 )),
           ),
@@ -69,8 +68,4 @@ class _SearchTextFieldState extends State<SearchTextField> {
       ],
     );
   }
-}
-
-void _back() {
-  Modular.to.pop();
 }

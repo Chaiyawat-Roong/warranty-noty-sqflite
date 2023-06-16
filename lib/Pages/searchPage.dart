@@ -13,27 +13,24 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final homePageBloc = BlocProvider(create: (context) => HomePageBloc());
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [homePageBloc],
-        child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 64,
-            title: const SearchTextField(),
-            automaticallyImplyLeading: false,
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 64,
+        title: const SearchTextField(),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: Container(
+          child: Text(
+            "Hello world!",
+            style: CustomTextStyle.heading1(context)
+                .copyWith(color: kPrimaryPurple),
           ),
-          body: Center(
-            child: Container(
-              child: Text(
-                "Hello world!",
-                style: CustomTextStyle.heading1(context)
-                    .copyWith(color: kPrimaryPurple),
-              ),
-            ),
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }

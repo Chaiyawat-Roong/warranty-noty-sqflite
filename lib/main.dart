@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:warranty_noty/Pages/addProductPage.dart';
 import 'package:warranty_noty/bloc/home_page_bloc.dart';
 
 import 'Pages/homePage.dart';
@@ -19,7 +20,8 @@ class AppModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/', child: (context, args) => const HomePage()),
-        ChildRoute('/search', child: (context, args) => const SearchPage())
+        ChildRoute('/search', child: (context, args) => const SearchPage()),
+        ChildRoute('/add', child: (context, args) => const AddProductPage())
       ];
 }
 
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: kPrimaryPurple,

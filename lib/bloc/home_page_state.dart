@@ -1,15 +1,15 @@
 part of 'home_page_bloc.dart';
 
 class HomePageState extends Equatable{
-    final bool showSearch;
+    final int selectIndex;
 
-    const HomePageState({this.showSearch = false});
+    const HomePageState({this.selectIndex = 0});
 
-    HomePageState copyWith({bool? show}){
-      return HomePageState(showSearch: show ?? showSearch);
+    HomePageState copyWith({int? select}){
+      return HomePageState(selectIndex: select ?? selectIndex);
     }
     
     @override
     // TODO: implement props
-    List<Object?> get props => [showSearch];
+    List<Object?> get props => [selectIndex];
 }
