@@ -12,7 +12,7 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  FocusNode myfocus = FocusNode();
+  final FocusNode myfocus = FocusNode();
 
   @override
   void initState() {
