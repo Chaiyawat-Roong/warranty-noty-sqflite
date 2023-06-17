@@ -12,13 +12,13 @@ class SearchTextField extends StatefulWidget {
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  final FocusNode myfocus = FocusNode();
+  FocusNode myfocus = FocusNode();
 
   @override
   void initState() {
     myfocus.addListener(() {
       if (myfocus.hasFocus) {
-        print("Textfield one got focused.");
+        return;
       } else {
         Modular.to.pop();
       }

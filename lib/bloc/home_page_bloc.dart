@@ -14,8 +14,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<HomePageSelectEvent>((event, emit) {
       if(event.index == 0){
         emit(HomePageFinishState(event.index, repository.getAllProducts()));
-      }else{
-        emit(HomePageFinishState(event.index, state.products!.reversed.toList()));
+      }else if(event.index == 1){
+        List<Product> sortProducts = [...state.products!];
+        sortProducts.sort((a, b) => a.expDate!.compareTo(b.expDate!));
+        emit(HomePageFinishState(event.index, sortProducts));
       }
     });
   }

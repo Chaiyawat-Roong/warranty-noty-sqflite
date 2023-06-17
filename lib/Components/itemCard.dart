@@ -24,7 +24,6 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
-    Product product = widget.product!;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -68,7 +67,7 @@ class _ItemCardState extends State<ItemCard> {
             ],
           ),
           Column(
-            children: _isNotExp
+            children: !widget.product!.isExp!
                 ? [
                     Text(
                       "คงเหลือ",
@@ -77,17 +76,7 @@ class _ItemCardState extends State<ItemCard> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "${DateTime(
-                  widget.product!.expType == "Year"
-                      ? widget.product!.date!.year + widget.product!.expTime!
-                      : widget.product!.date!.year,
-                  widget.product!.expType == "Month"
-                      ? widget.product!.date!.month + widget.product!.expTime!
-                      : widget.product!.date!.month,
-                  widget.product!.expType == "Day"
-                      ? widget.product!.date!.day + widget.product!.expTime!
-                      : widget.product!.date!.day,
-                ).difference(widget.product!.date!).inDays} วัน",
+                      "${widget.product!.expDate!.difference(DateTime.now()).inDays + 1} วัน",
                       style: CustomTextStyle.heading2(context)
                           .copyWith(color: kPrimaryDarkPurple),
                     ),

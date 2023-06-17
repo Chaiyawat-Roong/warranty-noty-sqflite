@@ -8,7 +8,7 @@ abstract class HomePageEvent extends Equatable{
 }
 
 class HomePageSelectEvent extends HomePageEvent{
-  final int index;
+  final int? index;
 
-  HomePageSelectEvent({this.index = 0});
+  HomePageSelectEvent({this.index});
 }
