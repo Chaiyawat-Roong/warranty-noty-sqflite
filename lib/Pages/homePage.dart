@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-// import 'package:flutter_modular/flutter_modular.dart';
 import 'package:warranty_noty/bloc/home_page_repository.dart';
 
 import '../Components/filterButton.dart';
@@ -21,7 +20,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final homePageBloc = BlocProvider(create: (context) => HomePageBloc(HomePageRepository(ProductsDataProvider())));
   final HomePageBloc2 = HomePageBloc(HomePageRepository(ProductsDataProvider()));
-  final int _selectIndex = 0;
 
   @override
   Widget build(BuildContext context) {

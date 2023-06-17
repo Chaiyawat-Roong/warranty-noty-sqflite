@@ -47,6 +47,16 @@ class ProductsDataProvider {
         expType: "Day",
         insurer: "SYNNEX",
         isExp: true),
+    Product(
+        name: "คีย์บอร์ด Logitech G512",
+        serial: "2022LZ06ELL8",
+        date: DateTime.parse("2022-07-20"),
+        expDate: DateTime.parse("2025-07-20"),
+        expTime: 3,
+        expType: "Year",
+        insurer: "SYNNEX",
+        isExp: false),
+        
   ];
 
   List<Product> get products => _products;

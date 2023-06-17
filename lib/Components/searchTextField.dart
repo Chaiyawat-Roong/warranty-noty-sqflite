@@ -52,7 +52,6 @@ class _SearchTextFieldState extends State<SearchTextField> {
                     color: kPrimaryDarkPurple,
                   ),
                   onPressed: () {
-
                   },
                 ),
                 suffixIconColor: const Color(0xFF3F3E6D),

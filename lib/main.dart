@@ -22,7 +22,7 @@ class AppModule extends Module {
         ChildRoute('/', child: (context, args) => const HomePage()),
         ChildRoute('/search', child: (context, args) => const SearchPage()),
         ChildRoute('/add', child: (context, args) => const AddProductPage())
-      ];
+  ];
 }
 
 class MyApp extends StatelessWidget {
