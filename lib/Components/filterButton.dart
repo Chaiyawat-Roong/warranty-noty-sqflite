@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warranty_noty/bloc/home_page_bloc.dart';
+import 'package:warranty_noty/bloc/app_bloc.dart';
 
 import '../constants.dart';
 
@@ -22,7 +22,7 @@ class FilterButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context
-            .read<HomePageBloc>()
+            .read<AppBloc>()
             .add(HomePageSelectEvent(index: _indexSelect));
       },
       child: Container(

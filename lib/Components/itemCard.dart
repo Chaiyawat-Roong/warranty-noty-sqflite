@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warranty_noty/bloc/home_page_bloc.dart';
+import 'package:warranty_noty/bloc/app_bloc.dart';
 import 'package:warranty_noty/models/product.dart';
 
 import '../constants.dart';
@@ -67,7 +67,7 @@ class _ItemCardState extends State<ItemCard> {
             ],
           ),
           Column(
-            children: !widget.product!.isExp!
+            children: (widget.product!.expDate!.difference(DateTime.now()).inDays + 1) >= 0
                 ? [
                     Text(
                       "คงเหลือ",

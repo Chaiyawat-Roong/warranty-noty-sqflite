@@ -17,7 +17,6 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       expTime: json['expTime'] as int?,
       expType: json['expType'] as String?,
       insurer: json['insurer'] as String?,
-      isExp: json['isExp'] as bool?,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -28,5 +27,4 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'expTime': instance.expTime,
       'expType': instance.expType,
       'insurer': instance.insurer,
-      'isExp': instance.isExp,
     };

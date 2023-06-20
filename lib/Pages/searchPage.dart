@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Components/searchTextField.dart';
-import '../bloc/home_page_bloc.dart';
+import '../bloc/app_bloc.dart';
 import '../constants.dart';
 
 class SearchPage extends StatefulWidget {

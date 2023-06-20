@@ -1,4 +1,4 @@
-part of 'home_page_bloc.dart';
+part of 'app_bloc.dart';
 
 
 @immutable

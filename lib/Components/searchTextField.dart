@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:warranty_noty/bloc/home_page_bloc.dart';
+import 'package:warranty_noty/bloc/app_bloc.dart';
 import 'package:warranty_noty/constants.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -59,7 +59,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                   icon: const Icon(Icons.arrow_back_ios,
                       color: kPrimaryDarkPurple),
                   onPressed: () {
-                    Modular.to.pop();
+                    Navigator.pop(context);
                   },
                 )),
           ),

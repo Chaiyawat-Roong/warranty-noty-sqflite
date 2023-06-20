@@ -11,11 +11,10 @@ class Product {
   final int? expTime;
   final String? expType;
   final String? insurer;
-  final bool? isExp;
 
-  const Product({this.name, this.serial, this.date, this.expDate, this.expTime, this.expType, this.insurer, this.isExp});
+  const Product({this.name, this.serial, this.date, this.expDate, this.expTime, this.expType, this.insurer});
 
-  Product copyWith({String? name, String? serial, DateTime? date, DateTime? expDate, int? expTime, String? expType, String? insurer, bool? isExp}) {
+  Product copyWith({String? name, String? serial, DateTime? date, DateTime? expDate, int? expTime, String? expType, String? insurer}) {
     return Product(
       name: name ?? this.name,
       serial: serial ?? this.serial,
@@ -24,7 +23,6 @@ class Product {
       expTime: expTime ?? this.expTime,
       expType: expType ?? this.expType,
       insurer: insurer ?? this.insurer,
-      isExp: isExp ?? this.isExp
     );
   }
 
