@@ -12,8 +12,9 @@ class AppRepository {
 
     void addProduct2(Product product){
       provider.addProduct(product);
-      print(product.name);
-      print(product.expDate);
-      print(product.expType);
+    }
+
+    void delProduct2(String delName){
+      provider.delProduct(delName);
     }
 }

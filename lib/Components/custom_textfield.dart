@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -11,14 +10,12 @@ class CustomTextfield extends StatelessWidget {
     required this.controller,
     bool isDate = false
   })  : _hintLabel = hintLabel,
-        _hintText = hintText,
-        _isDate = isDate;
+        _hintText = hintText;
         
 
   final String? _hintText;
   final String? _hintLabel;
   final TextEditingController controller;
-  final bool _isDate;
 
   @override
   Widget build(BuildContext context) {

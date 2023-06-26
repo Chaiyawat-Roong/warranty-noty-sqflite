@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:warranty_noty/bloc/app_bloc.dart';
 import 'package:warranty_noty/constants.dart';
 
 class SearchTextField extends StatefulWidget {
-  const SearchTextField({super.key});
+  const SearchTextField({
+    super.key,
+    required this.controller,
+  });
+
+  final TextEditingController controller;
 
   @override
   State<SearchTextField> createState() => _SearchTextFieldState();
@@ -36,6 +39,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
               color: kBackgroundLightgrey,
               borderRadius: BorderRadius.circular(10.0)),
           child: TextField(
+            controller: widget.controller,
             focusNode: myfocus,
             autofocus: true,
             style: const TextStyle(color: Color(0xFF3F3E6D)),
@@ -51,8 +55,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                     Icons.search,
                     color: kPrimaryDarkPurple,
                   ),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 suffixIconColor: const Color(0xFF3F3E6D),
                 prefixIcon: IconButton(

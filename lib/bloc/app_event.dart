@@ -2,7 +2,6 @@ part of 'app_bloc.dart';
 
 abstract class AppEvent extends Equatable{
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 
 }
@@ -13,8 +12,20 @@ class HomePageSelectEvent extends AppEvent{
   HomePageSelectEvent({this.index});
 }
 
-class addProductEvent extends AppEvent{
+class AddProductEvent extends AppEvent{
   final Product? product;
 
-  addProductEvent({this.product});
+  AddProductEvent({this.product});
+}
+
+class DeleteProductEvent extends AppEvent{
+  final String? delName;
+
+  DeleteProductEvent({this.delName});
+}
+
+class SearchProductEvent extends AppEvent{
+  final String? name;
+
+  SearchProductEvent({this.name});
 }

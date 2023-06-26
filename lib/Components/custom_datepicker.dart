@@ -33,8 +33,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   _CustomDatePickerState(this.stateController);
 
-  DateTime? _dateTime = DateTime.now();
-
   void _showDatePicker() {
     showDatePicker(
       context: context,
@@ -43,7 +41,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       lastDate: DateTime(2025),
     ).then((value) {
       setState(() {
-        _dateTime = value;
         stateController.text = value.toString().split(" ")[0].replaceAll("-", "/");
       });
     });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warranty_noty/bloc/app_bloc.dart';
+import 'package:warranty_noty/Pages/details_page.dart';
 import 'package:warranty_noty/models/product.dart';
 
 import '../constants.dart';
@@ -15,7 +14,6 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  final bool _isNotExp = true;
 
   @override
   void initState() {
@@ -24,6 +22,17 @@ class _ItemCardState extends State<ItemCard> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime expDate = DateTime(
+                    widget.product!.expType == "Year"
+                        ? widget.product!.date!.year + widget.product!.expTime!
+                        : widget.product!.date!.year,
+                    widget.product!.expType == "Month"
+                        ? widget.product!.date!.month + widget.product!.expTime!
+                        : widget.product!.date!.month,
+                    widget.product!.expType == "Day"
+                        ? widget.product!.date!.day + widget.product!.expTime!
+                        : widget.product!.date!.day,
+                  );
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -50,24 +59,14 @@ class _ItemCardState extends State<ItemCard> {
               ),
               const SizedBox(height: 4),
               Text(
-                "${widget.product!.date.toString().split(" ")[0].replaceAll("-", "/")} - ${DateTime(
-                  widget.product!.expType == "Year"
-                      ? widget.product!.date!.year + widget.product!.expTime!
-                      : widget.product!.date!.year,
-                  widget.product!.expType == "Month"
-                      ? widget.product!.date!.month + widget.product!.expTime!
-                      : widget.product!.date!.month,
-                  widget.product!.expType == "Day"
-                      ? widget.product!.date!.day + widget.product!.expTime!
-                      : widget.product!.date!.day,
-                ).toString().split(" ")[0].replaceAll("-", "/")}",
+                "${widget.product!.date.toString().split(" ")[0].replaceAll("-", "/")} - ${expDate.toString().split(" ")[0].replaceAll("-", "/")}",
                 style: CustomTextStyle.body3(context)
                     .copyWith(color: kSecondaryGrey),
               )
             ],
           ),
           Column(
-            children: (widget.product!.expDate!.difference(DateTime.now()).inDays + 1) >= 0
+            children: (expDate.difference(DateTime.now()).inDays + 1) > 0
                 ? [
                     Text(
                       "คงเหลือ",
@@ -76,7 +75,7 @@ class _ItemCardState extends State<ItemCard> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "${widget.product!.expDate!.difference(DateTime.now()).inDays + 1} วัน",
+                      "${expDate.difference(DateTime.now()).inDays + 1} วัน",
                       style: CustomTextStyle.heading2(context)
                           .copyWith(color: kPrimaryDarkPurple),
                     ),
