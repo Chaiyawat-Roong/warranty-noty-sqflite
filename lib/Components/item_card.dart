@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:warranty_noty/Pages/details_page.dart';
 import 'package:warranty_noty/models/product.dart';
 
 import '../constants.dart';
