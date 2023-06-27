@@ -4,6 +4,7 @@ part 'product.g.dart';
 
 @JsonSerializable()
 class Product {
+  final String? id;
   final String? name;
   final String? serial;
   final DateTime? date;
@@ -11,7 +12,7 @@ class Product {
   final String? expType;
   final String? insurer;
 
-  const Product({this.name, this.serial, this.date, this.expTime, this.expType, this.insurer});
+  const Product({this.id, this.name, this.serial, this.date, this.expTime, this.expType, this.insurer});
 
   Product copyWith({String? name, String? serial, DateTime? date, int? expTime, String? expType, String? insurer}) {
     return Product(

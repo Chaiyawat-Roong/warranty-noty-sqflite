@@ -10,6 +10,7 @@ class CustomExpInput extends StatefulWidget {
       required String? hintText,
       required this.controller,
       required this.onDropdownChange,
+      this.selectedValue = "Day",
       bool isDate = false})
       : _hintLabel = hintLabel,
         _hintText = hintText;
@@ -18,16 +19,16 @@ class CustomExpInput extends StatefulWidget {
   final String? _hintLabel;
   final TextEditingController controller;
   final Function onDropdownChange;
+  final String selectedValue;
 
   @override
   State<CustomExpInput> createState() => _CustomExpInputState();
 }
 
 class _CustomExpInputState extends State<CustomExpInput> {
-  String _selectedValue = "Day";
-
   @override
   Widget build(BuildContext context) {
+    String _selectedValue = widget.selectedValue;
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Column(
@@ -52,7 +53,6 @@ class _CustomExpInputState extends State<CustomExpInput> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: widget.controller,
-                    autofocus: true,
                     style: const TextStyle(color: Color(0xFF3F3E6D)),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(16.0),

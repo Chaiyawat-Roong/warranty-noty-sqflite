@@ -2,25 +2,25 @@ part of 'app_bloc.dart';
 
 
 @immutable
-abstract class HomePageState {
+abstract class AppState {
   int? get selectIndex => 0;
   List<Product>? get products => [];
 }
 
-class HomePageInitial extends HomePageState{
+class AppInitial extends AppState{
   final List<Product> _products;
 
-  HomePageInitial(this._products);
+  AppInitial(this._products);
 
   @override
   List<Product>? get products => _products;
 }
 
-class HomePageFinishState extends HomePageState{
+class AppFinishState extends AppState{
     final int? _selectIndex;
     final List<Product> _products;
 
-    HomePageFinishState(this._selectIndex, this._products);
+    AppFinishState(this._selectIndex, this._products);
 
     @override
     int? get selectIndex => _selectIndex;
@@ -29,11 +29,11 @@ class HomePageFinishState extends HomePageState{
     List<Product>? get products => _products;
 }
 
-class HomePageSortState extends HomePageState{
+class AppSortState extends AppState{
     final int? _selectIndex;
     final List<Product> _products;
 
-    HomePageSortState(this._selectIndex, this._products);
+    AppSortState(this._selectIndex, this._products);
 
     @override
     int? get selectIndex => _selectIndex;
@@ -42,20 +42,32 @@ class HomePageSortState extends HomePageState{
     List<Product>? get products => _products;
 }
 
-class SelectState extends HomePageState{
+class SelectState extends AppState{
     final int? _selectIndex;
+    final List<Product> _products;
 
-    SelectState(this._selectIndex);
+    SelectState(this._selectIndex, this._products);
 
     @override
     int? get selectIndex => _selectIndex;
+
+    @override
+    List<Product>? get products => _products;
 }
 
-class ProductsState extends HomePageState{
+class ProductsState extends AppState{
     final List<Product> _products;
 
     ProductsState(this._products);
 
     @override
     List<Product>? get products => _products;
+}
+
+class ProductDetailState extends AppState{
+    final Product _product;
+
+    ProductDetailState(this._product);
+
+    Product? get product => _product;
 }

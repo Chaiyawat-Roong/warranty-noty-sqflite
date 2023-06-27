@@ -38,7 +38,6 @@ class CustomTextfield extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0)),
               child: TextField(
                 controller: controller,
-                autofocus: true,
                 style: const TextStyle(color: Color(0xFF3F3E6D)),
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(16.0),

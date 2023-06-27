@@ -10,11 +10,15 @@ class AppRepository {
         return provider.products;
     }
 
-    void addProduct2(Product product){
+    void addProduct(Product product){
       provider.addProduct(product);
     }
 
-    void delProduct2(String delName){
+    void delProduct(String delName){
       provider.delProduct(delName);
+    }
+
+    void editProduct(Product product){
+      provider.editProduct(product);
     }
 }

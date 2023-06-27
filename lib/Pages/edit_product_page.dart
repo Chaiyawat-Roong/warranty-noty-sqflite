@@ -1,32 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warranty_noty/Components/custom_datepicker.dart';
-import 'package:warranty_noty/Components/custom_expinput.dart';
-import 'package:warranty_noty/bloc/app_bloc.dart';
-import 'package:warranty_noty/models/product.dart';
 
+import '../Components/custom_datepicker.dart';
+import '../Components/custom_expinput.dart';
 import '../Components/custom_textfield.dart';
+import '../bloc/app_bloc.dart';
 import '../constants.dart';
+import '../models/product.dart';
 
-class AddProductPage extends StatefulWidget {
-  const AddProductPage({super.key});
+class EditProductPage extends StatefulWidget {
+  final Product product;
+  const EditProductPage({super.key, required this.product});
 
   @override
-  State<AddProductPage> createState() => _AddProductPageState();
+  State<EditProductPage> createState() => _EditProductPageState();
 }
 
-class _AddProductPageState extends State<AddProductPage> {
+class _EditProductPageState extends State<EditProductPage> {
   final TextEditingController _SerialController = TextEditingController();
   final TextEditingController _NameController = TextEditingController();
   final TextEditingController _DateController = TextEditingController();
   final TextEditingController _ExpController = TextEditingController();
   String _selectedValue = "Day";
   final TextEditingController _InsurerController = TextEditingController();
-  String checkEmpty = "";
+  String checkEmpty = "12345";
 
   @override
   void initState() {
     super.initState();
+    _SerialController.text = widget.product.serial!;
+    _NameController.text = widget.product.name!;
+    _DateController.text = widget.product.date.toString().split(" ")[0].replaceAll("-", "/");
+    _ExpController.text = widget.product.expTime.toString();
+    _selectedValue = widget.product.expType!;
+    _InsurerController.text = widget.product.insurer!;
   }
 
   void onDropdownChanged(String newValue) {
@@ -110,6 +117,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   hintLabel: "ระยะเวลารับประกัน",
                   hintText: "ระยะเวลารับประกัน",
                   controller: _ExpController,
+                  selectedValue: _selectedValue,
                   onDropdownChange: onDropdownChanged,
                 ),
                 CustomTextfield(
@@ -120,14 +128,15 @@ class _AddProductPageState extends State<AddProductPage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
               child: SizedBox(
                 child: ElevatedButton(
                   onPressed: checkEmpty != "12345"
                       ? null
                       : () {
-                          Product productToAdd = Product(
-                              id: "7",
+                          Product productToEdit = Product(
+                              id: widget.product.id,
                               name: _NameController.text,
                               serial: _SerialController.text,
                               date: DateTime.parse(
@@ -137,11 +146,11 @@ class _AddProductPageState extends State<AddProductPage> {
                               insurer: _InsurerController.text);
                           context
                               .read<AppBloc>()
-                              .add(AddProductEvent(product: productToAdd));
-                          // context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
+                              .add(EditProductEvent(product: productToEdit));
+                          context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
                           const snackBar = SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
+                            shape:  RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             content: Text(
@@ -149,8 +158,9 @@ class _AddProductPageState extends State<AddProductPage> {
                               style: TextStyle(color: Colors.white),
                             ),
                           );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          Navigator.pop(context, (){
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackBar);
+                          Navigator.pop(context, () {
                             _disposed();
                           });
                         },

@@ -22,15 +22,14 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    products = context.read<AppBloc>().state.products!;
-
+    context.read<AppBloc>().add(SearchProductsEvent(name: ""));
     _SearchController.addListener(_onTextChanged);
   }
 
 
   void _onTextChanged() {
     setState(() {
-      filterProducts = products.where((element) => element.name!.toLowerCase().contains(_SearchController.text.toLowerCase())).toList();
+      context.read<AppBloc>().add(SearchProductsEvent(name: _SearchController.text));
     });
   }
 
@@ -43,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
         title: SearchTextField(controller: _SearchController),
         automaticallyImplyLeading: false,
       ),
-      body: BlocBuilder<AppBloc, HomePageState>(
+      body: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return Center(
             child: Padding(
@@ -54,17 +53,17 @@ class _SearchPageState extends State<SearchPage> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 40.0),
                       child: ListView.builder(
-                          itemCount: filterProducts.length,
+                          itemCount: state.products!.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(product: state.products![index]))).then((value) {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(id: state.products![index].id!))).then((value) {
                                   setState(() {
                                   });
                                 });
                                 context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
                               }
-                              ,child: ItemCard(product: filterProducts[index]));
+                              ,child: ItemCard(product: state.products![index]));
                           }),
                     ),
                   )

@@ -11,6 +11,11 @@ class HomePageSelectEvent extends AppEvent{
 
   HomePageSelectEvent({this.index});
 }
+class GetProductEvent extends AppEvent{
+  final String? id;
+
+  GetProductEvent({this.id});
+}
 
 class AddProductEvent extends AppEvent{
   final Product? product;
@@ -18,14 +23,20 @@ class AddProductEvent extends AppEvent{
   AddProductEvent({this.product});
 }
 
-class DeleteProductEvent extends AppEvent{
-  final String? delName;
+class EditProductEvent extends AppEvent{
+  final Product? product;
 
-  DeleteProductEvent({this.delName});
+  EditProductEvent({this.product});
 }
 
-class SearchProductEvent extends AppEvent{
+class DeleteProductEvent extends AppEvent{
+  final String? delId;
+
+  DeleteProductEvent({this.delId});
+}
+
+class SearchProductsEvent extends AppEvent{
   final String? name;
 
-  SearchProductEvent({this.name});
+  SearchProductsEvent({this.name});
 }

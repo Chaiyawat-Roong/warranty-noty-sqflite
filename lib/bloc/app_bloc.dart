@@ -8,17 +8,16 @@ import '../models/product.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
-class AppBloc extends Bloc<AppEvent, HomePageState> {
+class AppBloc extends Bloc<AppEvent, AppState> {
   final AppRepository repository;
   AppBloc(this.repository)
-      : super(HomePageInitial(repository.getAllProducts())) {
+      : super(AppInitial(repository.getAllProducts())) {
     on<HomePageSelectEvent>(
       (event, emit) {
         if (event.index == 0) {
-          emit(SelectState(event.index));
-          emit(ProductsState(repository.getAllProducts()));
+          emit(SelectState(event.index, repository.getAllProducts()));
         } else if (event.index == 1) {
-          List<Product> sortProducts = [...state.products!];
+          List<Product> sortProducts = [...repository.getAllProducts()];
           sortProducts.sort((a, b) => DateTime(
                     a.expType == "Year"
                         ? a.date!.year + a.expTime!
@@ -40,20 +39,30 @@ class AppBloc extends Bloc<AppEvent, HomePageState> {
                         ? b.date!.day + b.expTime!
                         : b.date!.day,
                   )));
-          emit(HomePageFinishState(event.index, sortProducts));
+          emit(SelectState(event.index, sortProducts));
         }
       },
     );
     on<AddProductEvent>((event, emit) {
-      repository.addProduct2(event.product!);
+      repository.addProduct(event.product!);
+      emit(ProductsState(repository.getAllProducts()));
     });
     on<DeleteProductEvent>((event, emit) {
-      repository.delProduct2(event.delName!);
+      repository.delProduct(event.delId!);
+      emit(ProductsState(repository.getAllProducts()));
     });
-    on<SearchProductEvent>((event, emit) {
-      List<Product> products = repository.getAllProducts();
-      List<Product> filterProducts = products.where((element) => element.name!.toLowerCase().contains(event.name!.toLowerCase())).toList();
-      emit(HomePageFinishState(1, products));
+    on<EditProductEvent>((event, emit) {
+      repository.editProduct(event.product!);
+      emit(ProductsState(repository.getAllProducts()));
+    });
+    on<SearchProductsEvent>((event, emit) {
+      if(event.name == ""){
+        emit(ProductsState(repository.getAllProducts()));
+      }else{
+        List<Product> products = repository.getAllProducts();
+        List<Product> filterProducts = products.where((element) => element.name!.toLowerCase().contains(event.name!.toLowerCase())).toList();
+        emit(ProductsState(filterProducts));
+      }
     });
   }
 }

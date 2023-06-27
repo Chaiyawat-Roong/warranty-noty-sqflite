@@ -33,16 +33,20 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   _CustomDatePickerState(this.stateController);
 
-  void _showDatePicker() {
+  void _showDatePicker(){
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2025),
     ).then((value) {
-      setState(() {
-        stateController.text = value.toString().split(" ")[0].replaceAll("-", "/");
-      });
+      if(value == null){
+        stateController.text = DateTime.now().toString().split(" ")[0].replaceAll("-", "/");
+      }else{
+        setState(() {
+          stateController.text = value.toString().split(" ")[0].replaceAll("-", "/");
+        });
+      }
     });
   }
 

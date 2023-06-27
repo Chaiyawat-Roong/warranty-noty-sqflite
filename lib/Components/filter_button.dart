@@ -23,7 +23,6 @@ class FilterButton extends StatelessWidget {
       height: 29,
       child: ElevatedButton(
         onPressed: () {
-          print("click filter");
           context.read<AppBloc>().add(HomePageSelectEvent(index: _indexSelect));
         },
         style: ElevatedButton.styleFrom(
