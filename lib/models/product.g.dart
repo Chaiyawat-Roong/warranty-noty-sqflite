@@ -12,8 +12,8 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       serial: json['serial'] as String?,
       date:
           json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      expTime: json['expTime'] as int?,
-      expType: json['expType'] as String?,
+      exptime: json['exptime'] as int?,
+      exptype: json['exptype'] as String?,
       insurer: json['insurer'] as String?,
     );
 
@@ -22,7 +22,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'name': instance.name,
       'serial': instance.serial,
       'date': instance.date?.toIso8601String(),
-      'expTime': instance.expTime,
-      'expType': instance.expType,
+      'exptime': instance.exptime,
+      'exptype': instance.exptype,
       'insurer': instance.insurer,
     };

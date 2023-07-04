@@ -8,25 +8,24 @@ class Product {
   final String? name;
   final String? serial;
   final DateTime? date;
-  final int? expTime;
-  final String? expType;
+  final int? exptime;
+  final String? exptype;
   final String? insurer;
 
-  const Product({this.id, this.name, this.serial, this.date, this.expTime, this.expType, this.insurer});
+  const Product({this.id, this.name, this.serial, this.date, this.exptime, this.exptype, this.insurer});
 
-  Product copyWith({String? name, String? serial, DateTime? date, int? expTime, String? expType, String? insurer}) {
+  Product copyWith({String? name, String? serial, DateTime? date, int? exptime, String? exptype, String? insurer}) {
     return Product(
       name: name ?? this.name,
       serial: serial ?? this.serial,
       date: date ?? this.date,
-      expTime: expTime ?? this.expTime,
-      expType: expType ?? this.expType,
+      exptime: exptime ?? this.exptime,
+      exptype: exptype ?? this.exptype,
       insurer: insurer ?? this.insurer,
     );
   }
 
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
-  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 }

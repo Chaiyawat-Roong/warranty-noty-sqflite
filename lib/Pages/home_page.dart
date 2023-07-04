@@ -18,6 +18,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    context.read<AppBloc>().add(LoadingHomePageEvent(index: 0));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +56,12 @@ class _HomePageState extends State<HomePage> {
           ]),
       body: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
-          return state.products!.isEmpty
+          if (state is AppInitial) {
+            return const Center(
+              child: LinearProgressIndicator(),
+            );
+          } else {
+            return state.products!.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -84,7 +96,9 @@ class _HomePageState extends State<HomePage> {
                                   label: "ล่าสุด",
                                   id: 0,
                                 ),
-                                const SizedBox(width: 8,),
+                                const SizedBox(
+                                  width: 8,
+                                ),
                                 FilterButton(
                                   isActive: state.selectIndex == 1,
                                   label: "ใกล้หมดอายุ",
@@ -99,20 +113,28 @@ class _HomePageState extends State<HomePage> {
                                 itemCount: state.products!.length,
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(id: state.products![index].id!))).then((value) {
-                                      context.read<AppBloc>().add(HomePageSelectEvent(index: state.selectIndex));
-                                    });
-                                  },
-                                  child: ItemCard(
-                                      product: state.products![index]),
-                                );
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => DetailsPage(
+                                                  id: state.products![index]
+                                                      .id!))).then((value) {
+                                        context.read<AppBloc>().add(
+                                            HomePageSelectEvent(
+                                                index: state.selectIndex));
+                                      });
+                                    },
+                                    child: ItemCard(
+                                        product: state.products![index]),
+                                  );
                                 }),
                           ),
                         )
                       ],
                     ),
                   );
+          }
         },
       ),
       floatingActionButton: SizedBox(
@@ -120,13 +142,14 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton.extended(
           backgroundColor: kPrimaryPurple,
           onPressed: () {
-            Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddProductPage()))
-                .then((value) {
-              context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
-            });
+            context.read<AppBloc>().add(SearchAPIEvent(status: "text"));
+            // Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => const AddProductPage()))
+            //     .then((value) {
+            //   context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
+            // });
           },
           label: Text(
             "จดวันรับประกัน",

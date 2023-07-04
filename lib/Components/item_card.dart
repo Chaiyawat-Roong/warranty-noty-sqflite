@@ -22,14 +22,14 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     DateTime expDate = DateTime(
-                    widget.product!.expType == "Year"
-                        ? widget.product!.date!.year + widget.product!.expTime!
+                    widget.product!.exptype == "Year"
+                        ? widget.product!.date!.year + widget.product!.exptime!
                         : widget.product!.date!.year,
-                    widget.product!.expType == "Month"
-                        ? widget.product!.date!.month + widget.product!.expTime!
+                    widget.product!.exptype == "Month"
+                        ? widget.product!.date!.month + widget.product!.exptime!
                         : widget.product!.date!.month,
-                    widget.product!.expType == "Day"
-                        ? widget.product!.date!.day + widget.product!.expTime!
+                    widget.product!.exptype == "Day"
+                        ? widget.product!.date!.day + widget.product!.exptime!
                         : widget.product!.date!.day,
                   );
     return Container(
@@ -48,21 +48,23 @@ class _ItemCardState extends State<ItemCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${widget.product!.name} ${widget.product!.id}",
-                style: CustomTextStyle.heading2(context)
-                    .copyWith(color: kPrimaryDarkPurple),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                "${widget.product!.date.toString().split(" ")[0].replaceAll("-", "/")} - ${expDate.toString().split(" ")[0].replaceAll("-", "/")}",
-                style: CustomTextStyle.body3(context)
-                    .copyWith(color: kSecondaryGrey),
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${widget.product!.name} ${widget.product!.id}",
+                  style: CustomTextStyle.heading2(context)
+                      .copyWith(color: kPrimaryDarkPurple),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "${widget.product!.date.toString().split(" ")[0].replaceAll("-", "/")} - ${expDate.toString().split(" ")[0].replaceAll("-", "/")}",
+                  style: CustomTextStyle.body3(context)
+                      .copyWith(color: kSecondaryGrey),
+                )
+              ],
+            ),
           ),
           Column(
             children: (expDate.difference(DateTime.now()).inDays + 1) > 0

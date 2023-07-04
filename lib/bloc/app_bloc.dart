@@ -1,42 +1,49 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:warranty_noty/bloc/app_repository.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/product.dart';
+import '../models/response.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AppRepository repository;
-  AppBloc(this.repository)
-      : super(AppInitial(repository.getAllProducts())) {
+  AppBloc(this.repository): super(AppInitial(repository.getAllProducts())) {
+    on<LoadingHomePageEvent>((event, emit) async {
+      await repository.getAllProductsWithAPI();
+      emit(SelectState(event.index, repository.getAllProducts()));
+    });
     on<HomePageSelectEvent>(
-      (event, emit) {
+      (event, emit)async {
         if (event.index == 0) {
           emit(SelectState(event.index, repository.getAllProducts()));
         } else if (event.index == 1) {
           List<Product> sortProducts = [...repository.getAllProducts()];
           sortProducts.sort((a, b) => DateTime(
-                    a.expType == "Year"
-                        ? a.date!.year + a.expTime!
+                    a.exptype == "Year"
+                        ? a.date!.year + a.exptime!
                         : a.date!.year,
-                    a.expType == "Month"
-                        ? a.date!.month + a.expTime!
+                    a.exptype == "Month"
+                        ? a.date!.month + a.exptime!
                         : a.date!.month,
-                    a.expType == "Day"
-                        ? a.date!.day + a.expTime!
+                    a.exptype == "Day"
+                        ? a.date!.day + a.exptime!
                         : a.date!.day,
                   ).compareTo(DateTime(
-                    b.expType == "Year"
-                        ? b.date!.year + b.expTime!
+                    b.exptype == "Year"
+                        ? b.date!.year + b.exptime!
                         : b.date!.year,
-                    b.expType == "Month"
-                        ? b.date!.month + b.expTime!
+                    b.exptype == "Month"
+                        ? b.date!.month + b.exptime!
                         : b.date!.month,
-                    b.expType == "Day"
-                        ? b.date!.day + b.expTime!
+                    b.exptype == "Day"
+                        ? b.date!.day + b.exptime!
                         : b.date!.day,
                   )));
           emit(SelectState(event.index, sortProducts));
@@ -64,5 +71,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         emit(ProductsState(filterProducts));
       }
     });
+    // on<SearchAPIEvent>((event, emit) async {
+    //   var url = Uri.parse('http://10.0.2.2:3000/product/');
+    //   try{
+    //     var response = await http.get(url);
+    //     // print('Response status: ${response.statusCode}');
+    //     print('Response body: ${jsonDecode(response.body)['data'][0]}');
+    //     ResponseData product = ResponseData.fromJson(jsonDecode(response.body));
+    //     List<Product> products = [];
+    //     for(Product item in product.data!){
+    //       products.add(item);
+    //     }
+    //     print(products[1].name);
+    //     // print(event.status);
+    //     repository.getAllProductsWithAPI();
+    //   }catch(err){
+    //     print(err);
+    //   }
+    //   emit(ProductsState(repository.getAllProducts()));
+    // });
   }
 }

@@ -10,6 +10,10 @@ class AppRepository {
         return provider.products;
     }
 
+    Future<void> getAllProductsWithAPI(){
+       return provider.productsFormAPI();
+    }
+
     void addProduct(Product product){
       provider.addProduct(product);
     }

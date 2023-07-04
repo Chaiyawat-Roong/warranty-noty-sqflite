@@ -31,8 +31,8 @@ class _EditProductPageState extends State<EditProductPage> {
     _serialController.text = widget.product.serial!;
     _dameController.text = widget.product.name!;
     _dateController.text = widget.product.date.toString().split(" ")[0].replaceAll("-", "/");
-    _expController.text = widget.product.expTime.toString();
-    _selectedValue = widget.product.expType!;
+    _expController.text = widget.product.exptime.toString();
+    _selectedValue = widget.product.exptype!;
     _insurerController.text = widget.product.insurer!;
   }
 
@@ -141,8 +141,8 @@ class _EditProductPageState extends State<EditProductPage> {
                               serial: _serialController.text,
                               date: DateTime.parse(
                                   _dateController.text.replaceAll("/", "-")),
-                              expTime: int.parse(_expController.text),
-                              expType: _selectedValue,
+                              exptime: int.parse(_expController.text),
+                              exptype: _selectedValue,
                               insurer: _insurerController.text);
                           context
                               .read<AppBloc>()

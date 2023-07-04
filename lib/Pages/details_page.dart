@@ -27,14 +27,14 @@ class _DetailsPageState extends State<DetailsPage> {
           orElse: () => const Product(),
         );
     expDate = DateTime(
-      product!.expType == "Year"
-          ? product!.date!.year + product!.expTime!
+      product!.exptype == "Year"
+          ? product!.date!.year + product!.exptime!
           : product!.date!.year,
-      product!.expType == "Month"
-          ? product!.date!.month + product!.expTime!
+      product!.exptype == "Month"
+          ? product!.date!.month + product!.exptime!
           : product!.date!.month,
-      product!.expType == "Day"
-          ? product!.date!.day + product!.expTime!
+      product!.exptype == "Day"
+          ? product!.date!.day + product!.exptime!
           : product!.date!.day,
     );
     isExp = ((expDate!.difference(DateTime.now()).inDays + 1) > 0);
@@ -43,14 +43,14 @@ class _DetailsPageState extends State<DetailsPage> {
   void setExp() {
     setState(() {
       expDate = DateTime(
-        product!.expType == "Year"
-            ? product!.date!.year + product!.expTime!
+        product!.exptype == "Year"
+            ? product!.date!.year + product!.exptime!
             : product!.date!.year,
-        product!.expType == "Month"
-            ? product!.date!.month + product!.expTime!
+        product!.exptype == "Month"
+            ? product!.date!.month + product!.exptime!
             : product!.date!.month,
-        product!.expType == "Day"
-            ? product!.date!.day + product!.expTime!
+        product!.exptype == "Day"
+            ? product!.date!.day + product!.exptime!
             : product!.date!.day,
       );
       isExp = ((expDate!.difference(DateTime.now()).inDays + 1) > 0);
@@ -191,11 +191,11 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   DetailField(
                     label: "ระยะประกัน",
-                    detail: product!.expType == 'Year'
-                        ? "${product!.expTime} ปี"
-                        : product!.expType == 'Month'
-                            ? "${product!.expTime} เดือน"
-                            : "${product!.expTime} วัน",
+                    detail: product!.exptype == 'Year'
+                        ? "${product!.exptime} ปี"
+                        : product!.exptype == 'Month'
+                            ? "${product!.exptime} เดือน"
+                            : "${product!.exptime} วัน",
                   ),
                   const SizedBox(
                     height: 16,

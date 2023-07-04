@@ -11,6 +11,13 @@ class HomePageSelectEvent extends AppEvent{
 
   HomePageSelectEvent({this.index});
 }
+
+class LoadingHomePageEvent extends AppEvent{
+  final int? index;
+
+  LoadingHomePageEvent({this.index});
+}
+
 class GetProductEvent extends AppEvent{
   final String? id;
 
@@ -39,4 +46,10 @@ class SearchProductsEvent extends AppEvent{
   final String? name;
 
   SearchProductsEvent({this.name});
+}
+
+class SearchAPIEvent extends AppEvent{
+  final String? status;
+
+  SearchAPIEvent({this.status});
 }

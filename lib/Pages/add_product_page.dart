@@ -136,8 +136,8 @@ class _AddProductPageState extends State<AddProductPage> {
                               serial: _serialController.text,
                               date: DateTime.parse(
                                   _dateController.text.replaceAll("/", "-")),
-                              expTime: int.parse(_expController.text),
-                              expType: _selectedValue,
+                              exptime: int.parse(_expController.text),
+                              exptype: _selectedValue,
                               insurer: _insurerController.text);
                           context
                               .read<AppBloc>()
