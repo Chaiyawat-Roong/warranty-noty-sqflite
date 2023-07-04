@@ -25,13 +25,17 @@ class CustomDatePicker extends StatefulWidget {
   // final void Function()? showDate;
 
   @override
-  State<CustomDatePicker> createState() => _CustomDatePickerState(controller);
+  State<CustomDatePicker> createState() => _CustomDatePickerState();
 }
 
 class _CustomDatePickerState extends State<CustomDatePicker> {
-  final TextEditingController stateController;
+  TextEditingController? stateController;
 
-  _CustomDatePickerState(this.stateController);
+  @override
+  void didChangeDependencies() {
+    stateController = widget.controller;
+    super.didChangeDependencies();
+  }
 
   void _showDatePicker(){
     showDatePicker(
@@ -41,10 +45,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       lastDate: DateTime(2025),
     ).then((value) {
       if(value == null){
-        stateController.text = DateTime.now().toString().split(" ")[0].replaceAll("-", "/");
+        stateController!.text = DateTime.now().toString().split(" ")[0].replaceAll("-", "/");
       }else{
         setState(() {
-          stateController.text = value.toString().split(" ")[0].replaceAll("-", "/");
+          stateController!.text = value.toString().split(" ")[0].replaceAll("-", "/");
         });
       }
     });

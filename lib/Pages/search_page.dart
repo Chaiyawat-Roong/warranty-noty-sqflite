@@ -14,22 +14,25 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _SearchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<Product> products = [];
   List<Product> filterProducts = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    context.read<AppBloc>().add(SearchProductsEvent(name: ""));
-    _SearchController.addListener(_onTextChanged);
+    _searchController.addListener(_onTextChanged);
   }
 
+  @override
+  void didChangeDependencies() {
+    context.read<AppBloc>().add(SearchProductsEvent(name: ""));
+    super.didChangeDependencies();
+  }
 
   void _onTextChanged() {
     setState(() {
-      context.read<AppBloc>().add(SearchProductsEvent(name: _SearchController.text));
+      context.read<AppBloc>().add(SearchProductsEvent(name: _searchController.text));
     });
   }
 
@@ -39,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 64,
-        title: SearchTextField(controller: _SearchController),
+        title: SearchTextField(controller: _searchController),
         automaticallyImplyLeading: false,
       ),
       body: BlocBuilder<AppBloc, AppState>(

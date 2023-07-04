@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 import 'package:warranty_noty/Components/custom_datepicker.dart';
 import 'package:warranty_noty/Components/custom_expinput.dart';
 import 'package:warranty_noty/bloc/app_bloc.dart';
@@ -16,12 +17,12 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
-  final TextEditingController _SerialController = TextEditingController();
-  final TextEditingController _NameController = TextEditingController();
-  final TextEditingController _DateController = TextEditingController();
-  final TextEditingController _ExpController = TextEditingController();
+  final TextEditingController _serialController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _expController = TextEditingController();
   String _selectedValue = "Day";
-  final TextEditingController _InsurerController = TextEditingController();
+  final TextEditingController _insurerController = TextEditingController();
   String checkEmpty = "";
 
   @override
@@ -36,31 +37,31 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void _onTextChanged() {
-    String result = (_NameController.text != "" ? "1" : "") +
-        (_SerialController.text != "" ? "2" : "") +
-        (_DateController.text != "" ? "3" : "") +
-        (_ExpController.text != "" ? "4" : "") +
-        (_InsurerController.text != "" ? "5" : "");
+    String result = (_nameController.text != "" ? "1" : "") +
+        (_serialController.text != "" ? "2" : "") +
+        (_dateController.text != "" ? "3" : "") +
+        (_expController.text != "" ? "4" : "") +
+        (_insurerController.text != "" ? "5" : "");
     setState(() {
       checkEmpty = result;
     });
   }
 
   void _disposed() {
-    _SerialController.dispose();
-    _NameController.dispose();
-    _ExpController.dispose();
-    _InsurerController.dispose();
-    _DateController.dispose();
+    _serialController.dispose();
+    _nameController.dispose();
+    _expController.dispose();
+    _insurerController.dispose();
+    _dateController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _NameController.addListener(_onTextChanged);
-    _SerialController.addListener(_onTextChanged);
-    _DateController.addListener(_onTextChanged);
-    _ExpController.addListener(_onTextChanged);
-    _InsurerController.addListener(_onTextChanged);
+    _nameController.addListener(_onTextChanged);
+    _serialController.addListener(_onTextChanged);
+    _dateController.addListener(_onTextChanged);
+    _expController.addListener(_onTextChanged);
+    _insurerController.addListener(_onTextChanged);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -89,12 +90,12 @@ class _AddProductPageState extends State<AddProductPage> {
                 CustomTextfield(
                   hintText: "เช่น คีย์บอร์ด Logitech G512",
                   hintLabel: "ชื่อสินค้า",
-                  controller: _NameController,
+                  controller: _nameController,
                 ),
                 CustomTextfield(
                   hintText: "เลขซีเรียลหรือเลขรับประกันบนสินค้า",
                   hintLabel: "Serial Number",
-                  controller: _SerialController,
+                  controller: _serialController,
                 ),
                 CustomDatePicker(
                   hintText: "เลือกวัน/เดือน/ปี ที่ซื้อสินค้า",
@@ -104,18 +105,19 @@ class _AddProductPageState extends State<AddProductPage> {
                   //   return "";
                   // },
                   // validator: (){},
-                  controller: _DateController,
+                  controller: _dateController,
                 ),
                 CustomExpInput(
                   hintLabel: "ระยะเวลารับประกัน",
                   hintText: "ระยะเวลารับประกัน",
-                  controller: _ExpController,
+                  controller: _expController,
+                  selectedValue: _selectedValue,
                   onDropdownChange: onDropdownChanged,
                 ),
                 CustomTextfield(
                   hintText: "เช่น SYNNEX",
                   hintLabel: "ผู้รับประกัน",
-                  controller: _InsurerController,
+                  controller: _insurerController,
                 ),
               ],
             ),
@@ -126,15 +128,17 @@ class _AddProductPageState extends State<AddProductPage> {
                   onPressed: checkEmpty != "12345"
                       ? null
                       : () {
+                        var uuid = const Uuid();
+                        var generatedUuid = uuid.v4();
                           Product productToAdd = Product(
-                              id: "7",
-                              name: _NameController.text,
-                              serial: _SerialController.text,
+                              id: generatedUuid.toString(),
+                              name: _nameController.text,
+                              serial: _serialController.text,
                               date: DateTime.parse(
-                                  _DateController.text.replaceAll("/", "-")),
-                              expTime: int.parse(_ExpController.text),
+                                  _dateController.text.replaceAll("/", "-")),
+                              expTime: int.parse(_expController.text),
                               expType: _selectedValue,
-                              insurer: _InsurerController.text);
+                              insurer: _insurerController.text);
                           context
                               .read<AppBloc>()
                               .add(AddProductEvent(product: productToAdd));

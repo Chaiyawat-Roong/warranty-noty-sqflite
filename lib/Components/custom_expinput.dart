@@ -28,7 +28,7 @@ class CustomExpInput extends StatefulWidget {
 class _CustomExpInputState extends State<CustomExpInput> {
   @override
   Widget build(BuildContext context) {
-    String _selectedValue = widget.selectedValue;
+    String selectedValue = widget.selectedValue;
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Column(
@@ -75,7 +75,7 @@ class _CustomExpInputState extends State<CustomExpInput> {
                         color: kBackgroundLightgrey,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: DropdownButton<String>(
-                      value: _selectedValue,
+                      value: selectedValue,
                       items: const [
                         DropdownMenuItem(
                             value: 'Day', child: Padding(
@@ -97,7 +97,7 @@ class _CustomExpInputState extends State<CustomExpInput> {
                         // Handle dropdown value change
                         setState(() {
                           widget.onDropdownChange(newValue);
-                          _selectedValue = newValue!;
+                          selectedValue = newValue!;
                         });
                       },
                       style: CustomTextStyle.body2(context).copyWith(color: kPrimaryDarkPurple),

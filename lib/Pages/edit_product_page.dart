@@ -17,23 +17,23 @@ class EditProductPage extends StatefulWidget {
 }
 
 class _EditProductPageState extends State<EditProductPage> {
-  final TextEditingController _SerialController = TextEditingController();
-  final TextEditingController _NameController = TextEditingController();
-  final TextEditingController _DateController = TextEditingController();
-  final TextEditingController _ExpController = TextEditingController();
+  final TextEditingController _serialController = TextEditingController();
+  final TextEditingController _dameController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _expController = TextEditingController();
   String _selectedValue = "Day";
-  final TextEditingController _InsurerController = TextEditingController();
+  final TextEditingController _insurerController = TextEditingController();
   String checkEmpty = "12345";
 
   @override
   void initState() {
     super.initState();
-    _SerialController.text = widget.product.serial!;
-    _NameController.text = widget.product.name!;
-    _DateController.text = widget.product.date.toString().split(" ")[0].replaceAll("-", "/");
-    _ExpController.text = widget.product.expTime.toString();
+    _serialController.text = widget.product.serial!;
+    _dameController.text = widget.product.name!;
+    _dateController.text = widget.product.date.toString().split(" ")[0].replaceAll("-", "/");
+    _expController.text = widget.product.expTime.toString();
     _selectedValue = widget.product.expType!;
-    _InsurerController.text = widget.product.insurer!;
+    _insurerController.text = widget.product.insurer!;
   }
 
   void onDropdownChanged(String newValue) {
@@ -43,31 +43,31 @@ class _EditProductPageState extends State<EditProductPage> {
   }
 
   void _onTextChanged() {
-    String result = (_NameController.text != "" ? "1" : "") +
-        (_SerialController.text != "" ? "2" : "") +
-        (_DateController.text != "" ? "3" : "") +
-        (_ExpController.text != "" ? "4" : "") +
-        (_InsurerController.text != "" ? "5" : "");
+    String result = (_dameController.text != "" ? "1" : "") +
+        (_serialController.text != "" ? "2" : "") +
+        (_dateController.text != "" ? "3" : "") +
+        (_expController.text != "" ? "4" : "") +
+        (_insurerController.text != "" ? "5" : "");
     setState(() {
       checkEmpty = result;
     });
   }
 
   void _disposed() {
-    _SerialController.dispose();
-    _NameController.dispose();
-    _ExpController.dispose();
-    _InsurerController.dispose();
-    _DateController.dispose();
+    _serialController.dispose();
+    _dameController.dispose();
+    _expController.dispose();
+    _insurerController.dispose();
+    _dateController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _NameController.addListener(_onTextChanged);
-    _SerialController.addListener(_onTextChanged);
-    _DateController.addListener(_onTextChanged);
-    _ExpController.addListener(_onTextChanged);
-    _InsurerController.addListener(_onTextChanged);
+    _dameController.addListener(_onTextChanged);
+    _serialController.addListener(_onTextChanged);
+    _dateController.addListener(_onTextChanged);
+    _expController.addListener(_onTextChanged);
+    _insurerController.addListener(_onTextChanged);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -96,12 +96,12 @@ class _EditProductPageState extends State<EditProductPage> {
                 CustomTextfield(
                   hintText: "เช่น คีย์บอร์ด Logitech G512",
                   hintLabel: "ชื่อสินค้า",
-                  controller: _NameController,
+                  controller: _dameController,
                 ),
                 CustomTextfield(
                   hintText: "เลขซีเรียลหรือเลขรับประกันบนสินค้า",
                   hintLabel: "Serial Number",
-                  controller: _SerialController,
+                  controller: _serialController,
                 ),
                 CustomDatePicker(
                   hintText: "เลือกวัน/เดือน/ปี ที่ซื้อสินค้า",
@@ -111,19 +111,19 @@ class _EditProductPageState extends State<EditProductPage> {
                   //   return "";
                   // },
                   // validator: (){},
-                  controller: _DateController,
+                  controller: _dateController,
                 ),
                 CustomExpInput(
                   hintLabel: "ระยะเวลารับประกัน",
                   hintText: "ระยะเวลารับประกัน",
-                  controller: _ExpController,
+                  controller: _expController,
                   selectedValue: _selectedValue,
                   onDropdownChange: onDropdownChanged,
                 ),
                 CustomTextfield(
                   hintText: "เช่น SYNNEX",
                   hintLabel: "ผู้รับประกัน",
-                  controller: _InsurerController,
+                  controller: _insurerController,
                 ),
               ],
             ),
@@ -137,13 +137,13 @@ class _EditProductPageState extends State<EditProductPage> {
                       : () {
                           Product productToEdit = Product(
                               id: widget.product.id,
-                              name: _NameController.text,
-                              serial: _SerialController.text,
+                              name: _dameController.text,
+                              serial: _serialController.text,
                               date: DateTime.parse(
-                                  _DateController.text.replaceAll("/", "-")),
-                              expTime: int.parse(_ExpController.text),
+                                  _dateController.text.replaceAll("/", "-")),
+                              expTime: int.parse(_expController.text),
                               expType: _selectedValue,
-                              insurer: _InsurerController.text);
+                              insurer: _insurerController.text);
                           context
                               .read<AppBloc>()
                               .add(EditProductEvent(product: productToEdit));
