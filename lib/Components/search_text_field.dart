@@ -16,9 +16,11 @@ class SearchTextField extends StatefulWidget {
 
 class _SearchTextFieldState extends State<SearchTextField> {
   FocusNode myfocus = FocusNode();
+  TextEditingController? controller;
 
   @override
   void initState() {
+    controller = widget.controller;
     myfocus.addListener(() {
       if (myfocus.hasFocus) {
         return;
@@ -63,6 +65,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
                       color: kPrimaryDarkPurple),
                   onPressed: () {
                     Navigator.pop(context);
+                    setState(() {
+                      controller!.text = "";
+                    });
                   },
                 )),
           ),

@@ -38,7 +38,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   }
 
   void _showDatePicker(){
-    print(widget.controller.text.split(" ")[0].replaceAll("/", "-"));
     showDatePicker(
       context: context,
       initialDate: widget.controller.text != "" ? DateTime.parse(widget.controller.text.split(" ")[0].replaceAll("/", "-")) : DateTime.now(),

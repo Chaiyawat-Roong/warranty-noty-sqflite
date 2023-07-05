@@ -49,7 +49,9 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SearchPage()));
+                          builder: (context) => const SearchPage())).whenComplete((){
+                            context.read<AppBloc>().add(HomePageSelectEvent(index: context.read<AppBloc>().state.selectIndex)); 
+                          });
                 },
               ),
             )
@@ -58,7 +60,11 @@ class _HomePageState extends State<HomePage> {
         builder: (context, state) {
           if (state is AppInitial) {
             return Container();
-          } else {
+          }else if(state is ErrorState){
+            return Center(
+              child: Text("${state.error}"),
+            );
+          }else{
             return state.products!.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,

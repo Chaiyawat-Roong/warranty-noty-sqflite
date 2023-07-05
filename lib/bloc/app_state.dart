@@ -16,32 +16,6 @@ class AppInitial extends AppState{
   List<Product>? get products => _products;
 }
 
-class AppFinishState extends AppState{
-    final int? _selectIndex;
-    final List<Product> _products;
-
-    AppFinishState(this._selectIndex, this._products);
-
-    @override
-    int? get selectIndex => _selectIndex;
-
-    @override
-    List<Product>? get products => _products;
-}
-
-class AppSortState extends AppState{
-    final int? _selectIndex;
-    final List<Product> _products;
-
-    AppSortState(this._selectIndex, this._products);
-
-    @override
-    int? get selectIndex => _selectIndex;
-
-    @override
-    List<Product>? get products => _products;
-}
-
 class SelectState extends AppState{
     final int? _selectIndex;
     final List<Product> _products;
@@ -55,6 +29,15 @@ class SelectState extends AppState{
     List<Product>? get products => _products;
 }
 
+class ErrorState extends AppState{
+    final String? _error;
+
+    ErrorState(this._error);
+
+    @override
+    String? get error => _error;
+}
+
 class ProductsState extends AppState{
     final List<Product> _products;
 
@@ -64,10 +47,11 @@ class ProductsState extends AppState{
     List<Product>? get products => _products;
 }
 
-class ProductDetailState extends AppState{
-    final Product _product;
+class ProductsSearchState extends AppState{
+    final List<Product> _products;
 
-    ProductDetailState(this._product);
+    ProductsSearchState(this._products);
 
-    Product? get product => _product;
+    @override
+    List<Product>? get products => _products;
 }

@@ -9,6 +9,7 @@ import '../models/product.dart';
 class DetailsPage extends StatefulWidget {
   const DetailsPage({super.key, required this.id});
   final String id;
+  
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -17,6 +18,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   bool isExp = false;
   Product? product;
+  DateTime? expDate;
 
   @override
   void didChangeDependencies() {
@@ -25,53 +27,6 @@ class _DetailsPageState extends State<DetailsPage> {
           (element) => element.id == widget.id,
           orElse: () => const Product(),
         );
-    isExp = (DateTime(
-              context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Year"
-                  ? context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .year +
-                      context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : context.read<AppBloc>().state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .year,
-              context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Month"
-                  ? context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .month +
-                      context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : context.read<AppBloc>().state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .month,
-              context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Day"
-                  ? context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .day +
-                      context.read<AppBloc>().state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : context.read<AppBloc>().state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .day,
-            ).difference(DateTime.now()).inDays + 1) > 0;
     super.didChangeDependencies();
   }
 
@@ -79,6 +34,54 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
+        DateTime expDate = DateTime(
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            );
+            isExp = (expDate.difference(DateTime.now()).inDays + 1) > 0;
         product = context.read<AppBloc>().state.products!.firstWhere(
               (element) => element.id == widget.id,
               orElse: () => const Product(),
@@ -203,53 +206,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   DetailField(
                       label: "ช่วงเวลารับประกัน",
                       detail:
-                          "${state.products!.firstWhere((element) => element.id == widget.id).date.toString().split(" ")[0].replaceAll("-", "/")} - ${DateTime(
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Year"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .year +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .year,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Month"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .month +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .month,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Day"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .day +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .day,
-            ).toString().split(" ")[0].replaceAll("-", "/")}"),
+                          "${state.products!.firstWhere((element) => element.id == widget.id).date.toString().split(" ")[0].replaceAll("-", "/")} - ${expDate.toString().split(" ")[0].replaceAll("-", "/")}"),
                   const SizedBox(
                     height: 16,
                   ),
@@ -282,148 +239,10 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   DetailField(
                     label: "ประกันคงเหลือ",
-                    detail: ((DateTime(
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Year"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .year +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .year,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Month"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .month +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .month,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Day"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .day +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .day,
-            ).difference(DateTime.now()).inDays + 1) > 0)
-                        ? "${DateTime(
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Year"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .year +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .year,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Month"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .month +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .month,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Day"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .day +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .day,
-            ).difference(DateTime.now()).inDays + 1} วัน"
+                    detail: ((expDate.difference(DateTime.now()).inDays + 1) > 0)
+                        ? "${expDate.difference(DateTime.now()).inDays + 1} วัน"
                         : "หมดอายุประกัน",
-                    isExp: !((DateTime(
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Year"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .year +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .year,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Month"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .month +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .month,
-              state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptype ==
-                      "Day"
-                  ? state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .date!
-                          .day +
-                      state.products!
-                          .firstWhere((element) => element.id == widget.id)
-                          .exptime!
-                  : state.products!
-                      .firstWhere((element) => element.id == widget.id)
-                      .date!
-                      .day,
-            ).difference(DateTime.now()).inDays + 1) > 0),
+                    isExp: !((expDate.difference(DateTime.now()).inDays + 1) > 0),
                   ),
                 ],
               )),

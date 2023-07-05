@@ -10,23 +10,19 @@ class AppRepository {
         return provider.products;
     }
 
-    Future<void> getAllProductsWithAPI(){
-       return provider.fetchAllData();
+    Future<bool> getAllProductsWithAPI() async {
+       return await provider.fetchAllData();
     }
 
-    Product getProducts(String id){
-        return provider.products.firstWhere((element) => element.id == id);
+    Future<bool> addProduct(Product product) async {
+       return await provider.addProduct(product);
     }
 
-    void addProduct(Product product){
-      provider.addProduct(product);
+    Future<bool> delProduct(String delId) async {
+      return await provider.delProduct(delId);
     }
 
-    Future delProduct(String delId) async{
-      await provider.delProduct(delId);
-    }
-
-    void editProduct(Product product){
-      provider.updateProduct(product);
+    Future<bool> editProduct(Product product) async {
+      return await provider.updateProduct(product);
     }
 }
