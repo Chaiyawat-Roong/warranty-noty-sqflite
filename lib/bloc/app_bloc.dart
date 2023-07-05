@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:warranty_noty/bloc/app_repository.dart';
-import 'package:http/http.dart' as http;
 
 import '../models/product.dart';
-import '../models/response.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
