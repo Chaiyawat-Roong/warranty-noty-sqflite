@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             return Container();
           }else if(state is ErrorState){
             return Center(
-              child: Text("${state.error}"),
+              child: Text("${state.errorMessage}"),
             );
           }else{
             return state.products!.isEmpty

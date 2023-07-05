@@ -34,8 +34,7 @@ class ErrorState extends AppState{
 
     ErrorState(this._error);
 
-    @override
-    String? get error => _error;
+    String? get errorMessage => _error;
 }
 
 class ProductsState extends AppState{
