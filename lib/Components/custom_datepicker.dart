@@ -38,14 +38,15 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   }
 
   void _showDatePicker(){
+    print(widget.controller.text.split(" ")[0].replaceAll("/", "-"));
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: widget.controller.text != "" ? DateTime.parse(widget.controller.text.split(" ")[0].replaceAll("/", "-")) : DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2025),
     ).then((value) {
       if(value == null){
-        stateController!.text = DateTime.now().toString().split(" ")[0].replaceAll("-", "/");
+        stateController!.text = widget.controller.text != "" ? DateTime.parse(widget.controller.text.split(" ")[0].replaceAll("/", "-")).toString().split(" ")[0].replaceAll("-", "/") : DateTime.now().toString().split(" ")[0].replaceAll("-", "/");
       }else{
         setState(() {
           stateController!.text = value.toString().split(" ")[0].replaceAll("-", "/");

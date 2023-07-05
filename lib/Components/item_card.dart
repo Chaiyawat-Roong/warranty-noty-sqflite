@@ -53,7 +53,7 @@ class _ItemCardState extends State<ItemCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${widget.product!.name} ${widget.product!.id}",
+                  "${widget.product!.name}",
                   style: CustomTextStyle.heading2(context)
                       .copyWith(color: kPrimaryDarkPurple),
                 ),

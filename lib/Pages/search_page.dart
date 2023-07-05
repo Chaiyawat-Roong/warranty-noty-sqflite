@@ -63,6 +63,10 @@ class _SearchPageState extends State<SearchPage> {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPage(id: state.products![index].id!))).then((value) {
                                   setState(() {
                                   });
+                                }).whenComplete(() {
+                                  setState(() {
+                                    _searchController.text = "";
+                                  });
                                 });
                                 context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
                               }

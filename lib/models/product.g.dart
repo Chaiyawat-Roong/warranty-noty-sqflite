@@ -22,7 +22,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'name': instance.name,
       'serial': instance.serial,
       'date': instance.date?.toIso8601String(),
-      'exptime': instance.exptime,
+      'exptime': instance.exptime.toString(),
       'exptype': instance.exptype,
       'insurer': instance.insurer,
     };

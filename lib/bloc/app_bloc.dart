@@ -20,7 +20,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(SelectState(event.index, repository.getAllProducts()));
     });
     on<HomePageSelectEvent>(
-      (event, emit)async {
+      (event, emit) async {
+        await repository.getAllProductsWithAPI();
         if (event.index == 0) {
           emit(SelectState(event.index, repository.getAllProducts()));
         } else if (event.index == 1) {
@@ -52,43 +53,28 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     on<AddProductEvent>((event, emit) {
       repository.addProduct(event.product!);
+      repository.getAllProductsWithAPI();
       emit(ProductsState(repository.getAllProducts()));
     });
-    on<DeleteProductEvent>((event, emit) {
-      repository.delProduct(event.delId!);
+    on<DeleteProductEvent>((event, emit)async {
+      repository.delProduct(event.delId!).then((value) => repository.getAllProductsWithAPI());
       emit(ProductsState(repository.getAllProducts()));
     });
     on<EditProductEvent>((event, emit) {
       repository.editProduct(event.product!);
+      repository.getAllProductsWithAPI();
       emit(ProductsState(repository.getAllProducts()));
     });
     on<SearchProductsEvent>((event, emit) {
       if(event.name == ""){
+        repository.getAllProductsWithAPI();
         emit(ProductsState(repository.getAllProducts()));
       }else{
+        repository.getAllProductsWithAPI();
         List<Product> products = repository.getAllProducts();
         List<Product> filterProducts = products.where((element) => element.name!.toLowerCase().contains(event.name!.toLowerCase())).toList();
         emit(ProductsState(filterProducts));
       }
     });
-    // on<SearchAPIEvent>((event, emit) async {
-    //   var url = Uri.parse('http://10.0.2.2:3000/product/');
-    //   try{
-    //     var response = await http.get(url);
-    //     // print('Response status: ${response.statusCode}');
-    //     print('Response body: ${jsonDecode(response.body)['data'][0]}');
-    //     ResponseData product = ResponseData.fromJson(jsonDecode(response.body));
-    //     List<Product> products = [];
-    //     for(Product item in product.data!){
-    //       products.add(item);
-    //     }
-    //     print(products[1].name);
-    //     // print(event.status);
-    //     repository.getAllProductsWithAPI();
-    //   }catch(err){
-    //     print(err);
-    //   }
-    //   emit(ProductsState(repository.getAllProducts()));
-    // });
   }
 }

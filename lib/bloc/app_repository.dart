@@ -11,18 +11,22 @@ class AppRepository {
     }
 
     Future<void> getAllProductsWithAPI(){
-       return provider.productsFormAPI();
+       return provider.fetchAllData();
+    }
+
+    Product getProducts(String id){
+        return provider.products.firstWhere((element) => element.id == id);
     }
 
     void addProduct(Product product){
       provider.addProduct(product);
     }
 
-    void delProduct(String delName){
-      provider.delProduct(delName);
+    Future delProduct(String delId) async{
+      await provider.delProduct(delId);
     }
 
     void editProduct(Product product){
-      provider.editProduct(product);
+      provider.updateProduct(product);
     }
 }

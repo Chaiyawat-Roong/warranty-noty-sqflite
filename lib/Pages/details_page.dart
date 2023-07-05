@@ -16,51 +16,73 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   bool isExp = false;
-  DateTime? expDate;
   Product? product;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
     product = context.read<AppBloc>().state.products!.firstWhere(
           (element) => element.id == widget.id,
           orElse: () => const Product(),
         );
-    expDate = DateTime(
-      product!.exptype == "Year"
-          ? product!.date!.year + product!.exptime!
-          : product!.date!.year,
-      product!.exptype == "Month"
-          ? product!.date!.month + product!.exptime!
-          : product!.date!.month,
-      product!.exptype == "Day"
-          ? product!.date!.day + product!.exptime!
-          : product!.date!.day,
-    );
-    isExp = ((expDate!.difference(DateTime.now()).inDays + 1) > 0);
-  }
-
-  void setExp() {
-    setState(() {
-      expDate = DateTime(
-        product!.exptype == "Year"
-            ? product!.date!.year + product!.exptime!
-            : product!.date!.year,
-        product!.exptype == "Month"
-            ? product!.date!.month + product!.exptime!
-            : product!.date!.month,
-        product!.exptype == "Day"
-            ? product!.date!.day + product!.exptime!
-            : product!.date!.day,
-      );
-      isExp = ((expDate!.difference(DateTime.now()).inDays + 1) > 0);
-    });
+    isExp = (DateTime(
+              context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : context.read<AppBloc>().state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : context.read<AppBloc>().state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      context.read<AppBloc>().state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : context.read<AppBloc>().state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            ).difference(DateTime.now()).inDays + 1) > 0;
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
+        product = context.read<AppBloc>().state.products!.firstWhere(
+              (element) => element.id == widget.id,
+              orElse: () => const Product(),
+            );
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -121,25 +143,19 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                   ),
                 ],
-                onSelected: (value){
+                onSelected: (value) {
                   if (value == 'edit') {
                     Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    EditProductPage(product: product!))).whenComplete(() {
-                                      setState(() {
-                                        product = state.products!.firstWhere(
-                                          (element) => element.id == widget.id,
-                                          orElse: () => const Product(),
-                                        );
-                                      });
-                                      setExp();
-                                    });
+                                builder: (context) => EditProductPage(
+                                    product: state.products!.firstWhere(
+                                        (element) => element.id == widget.id))));
                   } else if (value == 'del') {
-                    context
-                        .read<AppBloc>()
-                        .add(DeleteProductEvent(delId: product!.id));
+                    context.read<AppBloc>().add(DeleteProductEvent(
+                        delId: state.products!
+                            .firstWhere((element) => element.id == widget.id)
+                            .id));
                     Navigator.of(context).pop();
                   }
                 },
@@ -161,15 +177,17 @@ class _DetailsPageState extends State<DetailsPage> {
                     height: 24,
                   ),
                   DetailField(
-                    label: "ชื่อสินค้า ${product!.name}",
-                    detail: "${product!.name}",
+                    label: "ชื่อสินค้า",
+                    detail:
+                        "${state.products!.firstWhere((element) => element.id == widget.id).name}",
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   DetailField(
                     label: "Serial Number",
-                    detail: "${product!.serial}",
+                    detail:
+                        "${state.products!.firstWhere((element) => element.id == widget.id).serial}",
                   ),
                   const SizedBox(
                     height: 24,
@@ -185,34 +203,227 @@ class _DetailsPageState extends State<DetailsPage> {
                   DetailField(
                       label: "ช่วงเวลารับประกัน",
                       detail:
-                          "${product!.date.toString().split(" ")[0].replaceAll("-", "/")} - ${expDate.toString().split(" ")[0].replaceAll("-", "/")}"),
+                          "${state.products!.firstWhere((element) => element.id == widget.id).date.toString().split(" ")[0].replaceAll("-", "/")} - ${DateTime(
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            ).toString().split(" ")[0].replaceAll("-", "/")}"),
                   const SizedBox(
                     height: 16,
                   ),
                   DetailField(
                     label: "ระยะประกัน",
-                    detail: product!.exptype == 'Year'
-                        ? "${product!.exptime} ปี"
-                        : product!.exptype == 'Month'
-                            ? "${product!.exptime} เดือน"
-                            : "${product!.exptime} วัน",
+                    detail: state.products!
+                                .firstWhere(
+                                    (element) => element.id == widget.id)
+                                .exptype ==
+                            'Year'
+                        ? "${state.products!.firstWhere((element) => element.id == widget.id).exptime} ปี"
+                        : state.products!
+                                    .firstWhere(
+                                        (element) => element.id == widget.id)
+                                    .exptype ==
+                                'Month'
+                            ? "${state.products!.firstWhere((element) => element.id == widget.id).exptime} เดือน"
+                            : "${state.products!.firstWhere((element) => element.id == widget.id).exptime} วัน",
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   DetailField(
                     label: "ผู้รับประกัน",
-                    detail: "${product!.insurer}",
+                    detail:
+                        "${state.products!.firstWhere((element) => element.id == widget.id).insurer}",
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   DetailField(
                     label: "ประกันคงเหลือ",
-                    detail: isExp
-                        ? "${expDate!.difference(DateTime.now()).inDays + 1} วัน"
+                    detail: ((DateTime(
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            ).difference(DateTime.now()).inDays + 1) > 0)
+                        ? "${DateTime(
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            ).difference(DateTime.now()).inDays + 1} วัน"
                         : "หมดอายุประกัน",
-                    isExp: !isExp,
+                    isExp: !((DateTime(
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Year"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .year +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .year,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Month"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .month +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .month,
+              state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptype ==
+                      "Day"
+                  ? state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .date!
+                          .day +
+                      state.products!
+                          .firstWhere((element) => element.id == widget.id)
+                          .exptime!
+                  : state.products!
+                      .firstWhere((element) => element.id == widget.id)
+                      .date!
+                      .day,
+            ).difference(DateTime.now()).inDays + 1) > 0),
                   ),
                 ],
               )),

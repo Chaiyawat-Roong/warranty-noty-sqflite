@@ -47,9 +47,3 @@ class SearchProductsEvent extends AppEvent{
 
   SearchProductsEvent({this.name});
 }
-
-class SearchAPIEvent extends AppEvent{
-  final String? status;
-
-  SearchAPIEvent({this.status});
-}

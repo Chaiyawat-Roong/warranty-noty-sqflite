@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:warranty_noty/models/product.dart';
 import 'package:http/http.dart' as http;
 import 'package:warranty_noty/models/response.dart';
@@ -65,34 +66,68 @@ class ProductsDataProvider {
 
   List<Product> get products => productsInProvider;
 
-  Future<void> productsFormAPI() async {
+  Future<void> fetchAllData() async {
     var url = Uri.parse('http://10.0.2.2:3000/product/');
-      try{
-        var response = await http.get(url);
-        // print('Response status: ${response.statusCode}');
-        print('Response body: ${jsonDecode(response.body)['data'][0]}');
-        ResponseData res = ResponseData.fromJson(jsonDecode(response.body));
-        print(res);
-        List<Product> products = [];
-        for(Product item in res.data!){
-          print(item.exptime);
-          products.add(item);
-        }
-        productsInProvider = products;
-      }catch(err){
-        print(err);
+    try {
+      var response = await http.get(url, headers: {'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
+      // print('Response status: ${response.statusCode}');
+      print('Response body: ${jsonDecode(response.body)['data'][0]}');
+      ResponseData res = ResponseData.fromJson(jsonDecode(response.body));
+      print(res);
+      List<Product> products = [];
+      for (Product item in res.data!) {
+        print(item.exptime);
+        products.add(item);
       }
+      productsInProvider = products;
+    } catch (err) {
+      print(err);
+    }
   }
 
-  void addProduct(Product product) {
-    productsInProvider.insert(0, product);
+  void addProduct(Product product) async {
+    print(product.toJson());
+    var url = Uri.parse('http://10.0.2.2:3000/product/');
+    try {
+      var response = await http.post(url,
+          body: jsonEncode(product.toJson()),
+          headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
+      // int index =
+      //     productsInProvider.indexWhere((element) => element.id == product.id);
+      // productsInProvider[index] = product;
+      print('Response body: ${response.body}');
+    } catch (err) {
+      print(err);
+    }
   }
-  void editProduct(Product product) {
-    int index = productsInProvider.indexWhere((element) => element.id == product.id);
-    productsInProvider[index] = product;
+
+  void updateProduct(Product product) async {
+    print(product.toJson());
+    var url = Uri.parse('http://10.0.2.2:3000/product/');
+    try {
+      var response = await http.put(url,
+          body: jsonEncode(product.toJson()),
+          headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
+      // int index =
+      //     productsInProvider.indexWhere((element) => element.id == product.id);
+      // productsInProvider[index] = product;
+      print('Response body: ${response.body}');
+    } catch (err) {
+      print(err);
+    }
   }
-  
-  void delProduct(String delId) {
-    productsInProvider.removeWhere((element) => element.id == delId);
+
+  Future delProduct(String delId) async {
+    var url = Uri.parse('http://10.0.2.2:3000/product/$delId');
+    try {
+      var response = await http.delete(url,
+          headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
+      // int index =
+      //     productsInProvider.indexWhere((element) => element.id == product.id);
+      // productsInProvider[index] = product;
+      print('Response body: ${response.body}');
+    } catch (err) {
+      print(err);
+    }
   }
 }

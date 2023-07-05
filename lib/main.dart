@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warranty_noty/bloc/app_bloc.dart';
 
@@ -8,7 +9,8 @@ import 'bloc/app_repository.dart';
 import 'bloc/product_data_provider.dart';
 import 'constants.dart';
 
-void main() {
+void main() async{
+  await dotenv.load();
   runApp(MyApp());
 }
 

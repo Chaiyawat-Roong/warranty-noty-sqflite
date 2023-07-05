@@ -57,9 +57,7 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           if (state is AppInitial) {
-            return const Center(
-              child: LinearProgressIndicator(),
-            );
+            return Container();
           } else {
             return state.products!.isEmpty
                 ? Column(
@@ -119,10 +117,16 @@ class _HomePageState extends State<HomePage> {
                                           MaterialPageRoute(
                                               builder: (context) => DetailsPage(
                                                   id: state.products![index]
-                                                      .id!))).then((value) {
-                                        context.read<AppBloc>().add(
-                                            HomePageSelectEvent(
-                                                index: state.selectIndex));
+                                                      .id!))).whenComplete(() {
+                                        Future.delayed(
+                                            const Duration(seconds: 2), () {
+                                          context.read<AppBloc>().add(
+                                              HomePageSelectEvent(
+                                                  index: context
+                                                      .read<AppBloc>()
+                                                      .state
+                                                      .selectIndex));
+                                        });
                                       });
                                     },
                                     child: ItemCard(
@@ -142,14 +146,13 @@ class _HomePageState extends State<HomePage> {
         child: FloatingActionButton.extended(
           backgroundColor: kPrimaryPurple,
           onPressed: () {
-            context.read<AppBloc>().add(SearchAPIEvent(status: "text"));
-            // Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => const AddProductPage()))
-            //     .then((value) {
-            //   context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
-            // });
+            Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddProductPage()))
+                .then((value) {
+              context.read<AppBloc>().add(HomePageSelectEvent(index: 0));
+            });
           },
           label: Text(
             "จดวันรับประกัน",
