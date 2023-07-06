@@ -1,15 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:warranty_noty/bloc/app_bloc.dart';
+import 'package:warranty_noty/firebase_options.dart';
 
 import 'Pages/home_page.dart';
 import 'bloc/app_repository.dart';
 import 'bloc/product_data_provider.dart';
 import 'constants.dart';
 
-void main() async{
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+
   await dotenv.load();
   runApp(MyApp());
 }
@@ -25,7 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [appBloc],
       child: MaterialApp(
         title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
+        // debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
               seedColor: kPrimaryPurple,
