@@ -11,7 +11,7 @@ class ProductsDataProvider {
   List<Product> get products => productsInProvider;
 
   Future<bool> fetchAllData() async {
-      var url = Uri.parse('http://10.0.2.2:3000/product/');
+      var url = Uri.parse('https://warranty-service.vercel.app/product/');
       var response = await http.get(url, headers: {'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
         ResponseData res = ResponseData.fromJson(jsonDecode(response.body));
@@ -27,7 +27,7 @@ class ProductsDataProvider {
   }
 
   Future<bool> addProduct(Product product) async {
-      var url = Uri.parse('http://10.0.2.2:3000/product/');
+      var url = Uri.parse('https://warranty-service.vercel.app/product/');
       var response = await http.post(url, body: jsonEncode(product.toJson()),headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
         return true;
@@ -37,7 +37,7 @@ class ProductsDataProvider {
   }
 
   Future<bool> updateProduct(Product product) async {
-      var url = Uri.parse('http://10.0.2.2:3000/product/');
+      var url = Uri.parse('https://warranty-service.vercel.app/product/');
       var response = await http.put(url, body: jsonEncode(product.toJson()), headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
         return true;
@@ -47,7 +47,7 @@ class ProductsDataProvider {
   }
 
   Future<bool> delProduct(String delId) async {
-      var url = Uri.parse('http://10.0.2.2:3000/product/$delId');
+      var url = Uri.parse('https://warranty-service.vercel.app/product/$delId');
       var response = await http.delete(url, headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
         return true;
