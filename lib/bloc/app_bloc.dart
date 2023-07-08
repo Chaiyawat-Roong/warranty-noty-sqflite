@@ -20,9 +20,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     });
     on<HomePageSelectEvent>(
       (event, emit) async {
-        if(await repository.getAllProductsWithAPI()){
           if (event.index == 0) {
-          emit(SelectState(event.index, repository.getAllProducts()));
+            emit(SelectState(event.index, repository.getAllProducts()));
           } else if (event.index == 1) {
             List<Product> sortProducts = [...repository.getAllProducts()];
             sortProducts.sort((a, b) => DateTime(
@@ -48,59 +47,36 @@ class AppBloc extends Bloc<AppEvent, AppState> {
                     )));
             emit(SelectState(event.index, sortProducts));
           }
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
       },
     );
     on<AddProductEvent>((event, emit) async {
       if(await repository.addProduct(event.product!)){
-        if(await repository.getAllProductsWithAPI()){
-          emit(ProductsState(repository.getAllProducts()));
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
+        emit(ProductsState(repository.getAllProducts()));
       }else{
         emit(ErrorState("Error 404 Not Found"));
       }
     });
     on<DeleteProductEvent>((event, emit)async {
       if(await repository.delProduct(event.delId!)){
-        if(await repository.getAllProductsWithAPI()){
-          emit(ProductsState(repository.getAllProducts()));
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
+        emit(ProductsState(repository.getAllProducts()));
       }else{
         emit(ErrorState("Error 404 Not Found"));
       }
     });
     on<EditProductEvent>((event, emit) async {
       if(await repository.editProduct(event.product!)){
-        if(await repository.getAllProductsWithAPI()){
-          emit(ProductsState(repository.getAllProducts()));
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
+        emit(ProductsState(repository.getAllProducts()));
       }else{
         emit(ErrorState("Error 404 Not Found"));
       }
     });
     on<SearchProductsEvent>((event, emit) async {
       if(event.name == ""){
-        if(await repository.getAllProductsWithAPI()){
-          emit(ProductsSearchState(repository.getAllProducts()));
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
+        emit(ProductsSearchState(repository.getAllProducts()));
       }else{
-        if(await repository.getAllProductsWithAPI()){
-          List<Product> products = repository.getAllProducts();
-          List<Product> filterProducts = products.where((element) => element.name!.toLowerCase().contains(event.name!.toLowerCase())).toList();
-          emit(ProductsSearchState(filterProducts));
-        }else{
-          emit(ErrorState("Error 404 Not Found"));
-        }
+        List<Product> products = repository.getAllProducts();
+        List<Product> filterProducts = products.where((element) => element.name!.toLowerCase().contains(event.name!.toLowerCase())).toList();
+        emit(ProductsSearchState(filterProducts));
       }
     });
   }

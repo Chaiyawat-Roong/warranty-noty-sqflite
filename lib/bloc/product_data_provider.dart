@@ -30,6 +30,7 @@ class ProductsDataProvider {
       var url = Uri.parse('https://warranty-service.vercel.app/product/');
       var response = await http.post(url, body: jsonEncode(product.toJson()),headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
+        productsInProvider.insert(0, product);
         return true;
       }else{
         return false;
@@ -40,6 +41,8 @@ class ProductsDataProvider {
       var url = Uri.parse('https://warranty-service.vercel.app/product/');
       var response = await http.put(url, body: jsonEncode(product.toJson()), headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
+        int index = productsInProvider.indexWhere((element) => element.id == product.id);
+        productsInProvider[index] = product;
         return true;
       }else{
         return false;
@@ -50,6 +53,7 @@ class ProductsDataProvider {
       var url = Uri.parse('https://warranty-service.vercel.app/product/$delId');
       var response = await http.delete(url, headers: {'Content-Type': 'application/json', 'Authorization': "Bearer ${dotenv.env['SECRET_KEY']!}"});
       if(response.statusCode == 200){
+        productsInProvider.removeWhere((element) => element.id == delId);
         return true;
       }else{
         return false;

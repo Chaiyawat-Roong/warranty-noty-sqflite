@@ -20,7 +20,7 @@ class DetailField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.35 ,child: Text(label, style: CustomTextStyle.body2(context).copyWith(color: kSecondaryGrey),)),
-        Expanded(child: Text(detail, overflow: TextOverflow.clip, style: CustomTextStyle.heading2(context).copyWith(color: isExp ?  kDanger : kPrimaryDarkPurple ),)),
+        Expanded(child: Text(detail, overflow: TextOverflow.clip, style: CustomTextStyle.heading2(context).copyWith(color: isExp ?  kDanger : kPrimaryDarkPurple, fontSize: 14),)),
       ],
     );
   }
