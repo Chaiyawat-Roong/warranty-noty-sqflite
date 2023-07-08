@@ -10,12 +10,12 @@ class AppRepository {
         return provider.products;
     }
 
-    Future<bool> getAllProductsWithAPI() async {
+    Future<bool> getAllProductsWithDB() async {
        return await provider.fetchAllData();
     }
 
     Future<bool> addProduct(Product product) async {
-       return await provider.addProduct(product);
+      return await provider.addProduct(product);
     }
 
     Future<bool> delProduct(String delId) async {

@@ -12,10 +12,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AppRepository repository;
   AppBloc(this.repository): super(AppInitial(repository.getAllProducts())) {
     on<LoadingHomePageEvent>((event, emit) async {
-      if(await repository.getAllProductsWithAPI()){
+      if(await repository.getAllProductsWithDB()){
         emit(SelectState(event.index, repository.getAllProducts()));
       }else{
-        emit(ErrorState("Error 404 Not Found"));
+        emit(ErrorState("Connect to Database Failed"));
       }
     });
     on<HomePageSelectEvent>(
@@ -53,21 +53,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       if(await repository.addProduct(event.product!)){
         emit(ProductsState(repository.getAllProducts()));
       }else{
-        emit(ErrorState("Error 404 Not Found"));
+        emit(ErrorState("Connect to Database Failed"));
       }
     });
     on<DeleteProductEvent>((event, emit)async {
       if(await repository.delProduct(event.delId!)){
         emit(ProductsState(repository.getAllProducts()));
       }else{
-        emit(ErrorState("Error 404 Not Found"));
+        emit(ErrorState("Connect to Database Failed"));
       }
     });
     on<EditProductEvent>((event, emit) async {
       if(await repository.editProduct(event.product!)){
         emit(ProductsState(repository.getAllProducts()));
       }else{
-        emit(ErrorState("Error 404 Not Found"));
+        emit(ErrorState("Connect to Database Failed"));
       }
     });
     on<SearchProductsEvent>((event, emit) async {
