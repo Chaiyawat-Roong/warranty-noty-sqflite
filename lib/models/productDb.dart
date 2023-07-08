@@ -4,14 +4,14 @@ class ProductDB {
   final String? name;
   final String? serial;
   final String? date;
-  final int? exptime;
-  final String? exptype;
+  final int? expTime;
+  final String? expType;
   final String? insurer;
 
-  const ProductDB(this.id, this.name, this.serial, this.date, this.exptime, this.exptype, this.insurer);
+  const ProductDB(this.id, this.name, this.serial, this.date, this.expTime, this.expType, this.insurer);
 
   factory ProductDB.fromMap(Map map) {
-    return ProductDB(map['id'], map['name'], map['serial'], map['date'], map['exptime'], map['exptype'], map['insurer']);
+    return ProductDB(map['id'], map['name'], map['serial'], map['date'], map['expTime'], map['expType'], map['insurer']);
   }
 
   Map<String, dynamic> toMap(){
@@ -20,8 +20,8 @@ class ProductDB {
       'name': name,
       'serial': serial,
       'date': date,
-      'exptime': exptime,
-      'exptype': exptype,
+      'exptime': expTime,
+      'exptype': expType,
       'insurer': insurer,
     };
   }

@@ -26,7 +26,7 @@ class ProductsDataProvider {
       List<ProductDB> productsDb = products.map((e) => ProductDB.fromMap(e)).toList();
 
       for(ProductDB item in productsDb){
-        productsInProvider.add(Product(id: item.id, name: item.name, serial: item.serial, date: DateTime.parse(item.date!), exptime: item.exptime, exptype: item.exptype, insurer: item.insurer));
+        productsInProvider.add(Product(id: item.id, name: item.name, serial: item.serial, date: DateTime.parse(item.date!), exptime: item.expTime, exptype: item.expType, insurer: item.insurer));
       }
 
       return true;
@@ -39,7 +39,7 @@ class ProductsDataProvider {
   Future<bool> addProduct(Product product) async {
     try{
       Database db = await database();
-      ProductDB productToAdd = ProductDB(product.id, product.name, product.serial, product.date!.toIso8601String(), product.exptime, product.exptype, product.insurer);
+      ProductDB productToAdd = ProductDB(product.id, product.name, product.serial, product.date!.toString(), product.exptime, product.exptype, product.insurer);
       db.insert(TableName, productToAdd.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);   
 
       productsInProvider.insert(0, product);
